@@ -166,6 +166,8 @@ public:
     void enableKioskMode();
     void createKioskCloseButton(const QRect& rect);
 
+    void autostartServer();
+
     /** Return the number of pixels in 1mm */
     qreal pixelDensity() const;
 

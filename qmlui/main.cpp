@@ -88,6 +88,10 @@ int main(int argc, char *argv[])
                                       "Enable kiosk mode (only Virtual Console)");
     parser.addOption(kioskOption);
 
+    QCommandLineOption serverAutostart(QStringList() << "s" << "server",
+                                      "Autostart server.");
+    parser.addOption(serverAutostart);
+
     QCommandLineOption localeOption(QStringList() << "l" << "locale",
                                       "Specify a language to use.",
                                       "locale", "");
@@ -104,6 +108,7 @@ int main(int argc, char *argv[])
     QCommandLineOption threedSupportOption(QStringList() << "3" << "no3d",
                                       "Disable the 3D preview.");
     parser.addOption(threedSupportOption);
+
 
     parser.process(app);
 
@@ -182,6 +187,10 @@ int main(int argc, char *argv[])
     // fullscreen mode
     if (parser.isSet(fullscreenOption))
         qlcplusApp.toggleFullscreen();
+
+    // autostart server
+    if (parser.isSet(serverAutostart))
+        qlcplusApp.autostartServer()
 
     return app.exec();
 }

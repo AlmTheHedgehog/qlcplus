@@ -265,6 +265,14 @@ QString App::goboSystemPath() const
     return QLCFile::systemDirectory(GOBODIR).absolutePath();
 }
 
+void App::autostartServer()
+{
+    if(m_networkManager.startServer())
+        qDebug() << "QLC+ server was started successfully";
+    else
+        qDebug() << Q_FUNC_INFO << "QLC+ server autostart failed";
+}
+
 qreal App::pixelDensity() const
 {
     return m_pixelDensity;
