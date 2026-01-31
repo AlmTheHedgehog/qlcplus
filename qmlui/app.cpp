@@ -267,7 +267,8 @@ QString App::goboSystemPath() const
 
 void App::autostartServer()
 {
-    if(m_networkManager.startServer())
+    m_networkManager->setAutostartServer(true);
+    if(m_networkManager->startServer())
         qDebug() << "QLC+ server was started successfully";
     else
         qDebug() << Q_FUNC_INFO << "QLC+ server autostart failed";

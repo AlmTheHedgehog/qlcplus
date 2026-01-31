@@ -190,7 +190,7 @@ int main(int argc, char *argv[])
 
     // autostart server
     if (parser.isSet(serverAutostart))
-        qlcplusApp.autostartServer()
+        qlcplusApp.autostartServer();
 
     return app.exec();
 }

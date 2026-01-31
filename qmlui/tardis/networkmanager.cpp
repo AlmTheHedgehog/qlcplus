@@ -39,6 +39,7 @@ NetworkManager::NetworkManager(QObject *parent, Doc *doc)
     : QObject(parent)
     , m_doc(doc)
     , m_encryptPackets(true)
+    , m_autostartServer(false)
     , m_udpSocket(nullptr)
     , m_tcpServer(nullptr)
     , m_serverStarted(false)
@@ -80,6 +81,11 @@ void NetworkManager::setHostName(QString hostName)
 
     m_hostName = hostName;
     emit hostNameChanged(m_hostName);
+}
+
+void NetworkManager::setAutostartServer(bool autostartServer)
+{
+    m_autostartServer = autostartServer;
 }
 
 int NetworkManager::connectionsCount()
@@ -614,8 +620,23 @@ void NetworkManager::slotProcessTCPPackets()
                 {
                     host->isAuthenticated = true;
                     host->hostName = paramsList.at(1).toString();
-                    // emit a signal to acquire the host permissions
-                    emit clientAccessRequest(host->hostName);
+                    if (m_autostartServer)
+                    {
+                        // give full acces for client in autostart server mode
+                        unsigned short access = App::AC_FixtureEditing
+                            | App::AC_FunctionEditing
+                            | App::AC_VCControl
+                            | App::AC_VCEditing
+                            | App::AC_SimpleDesk
+                            | App::AC_ShowManager
+                            | App::AC_InputOutput;
+                        setClientAccess(host->hostName, true, access);
+                    }
+                    else
+                    {
+                        // emit a signal to acquire the host permissions
+                        emit clientAccessRequest(host->hostName);
+                    }
                 }
                 else
                 {

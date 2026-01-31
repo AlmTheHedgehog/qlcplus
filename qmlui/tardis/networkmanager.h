@@ -101,6 +101,9 @@ private:
     /** Global flag to enable/disable packets encryption */
     bool m_encryptPackets;
 
+    /** Global flag to enable/disable QLC+ server autostart. Disables host consent */
+    bool m_autostartServer;
+
     /** The host name in the QLC+ network */
     QString m_hostName;
 
@@ -130,6 +133,7 @@ public:
     /** Get/Set the status of a QLC+ server instance */
     bool serverStarted() const;
     void setServerStarted(bool serverStarted);
+    void setAutostartServer(bool autostartServer);
 
 protected:
     QHostAddress getHostFromName(QString name);
