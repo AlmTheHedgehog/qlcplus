@@ -27,6 +27,7 @@
 #include "simplecrypt.h"
 #include "tardis.h"
 #include "doc.h"
+#include "app.h"
 
 #define DEFAULT_UDP_PORT    9997
 #define DEFAULT_TCP_PORT    9998
@@ -623,14 +624,17 @@ void NetworkManager::slotProcessTCPPackets()
                     if (m_autostartServer)
                     {
                         // give full acces for client in autostart server mode
-                        unsigned short access = App::AC_FixtureEditing
+                        int access = App::AC_FixtureEditing
                             | App::AC_FunctionEditing
                             | App::AC_VCControl
                             | App::AC_VCEditing
                             | App::AC_SimpleDesk
                             | App::AC_ShowManager
                             | App::AC_InputOutput;
-                        setClientAccess(host->hostName, true, access);
+                        if (setClientAccess(host->hostName, true, access))
+                            qDebug() << "Access level sent to client successfully";
+                        else
+                            qDebug() << "Failed to send access level to client";
                     }
                     else
                     {
