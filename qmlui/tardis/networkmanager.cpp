@@ -635,6 +635,10 @@ void NetworkManager::slotProcessTCPPackets()
                             qDebug() << "Access level sent to client successfully";
                         else
                             qDebug() << "Failed to send access level to client";
+                        if (sendWorkspaceToClient(host->hostName, "")) // TODO: have to provide filename of current session as 2nd client will reset the session. But the session file is present in App - use signals to retrieve it from there?
+                            qDebug() << "Empty workspace sent to client successfully";
+                        else
+                            qDebug() << "Failed to send workspace to client";
                     }
                     else
                     {
